@@ -1,0 +1,36 @@
+From 7a88b148684ac7a573f4d58fb41adef20779b621 Mon Sep 17 00:00:00 2001
+From: Wolf Vollprecht <wolf@prefix.dev>
+Date: Sun, 9 Aug 2026 12:00:00 +0200
+Subject: [PATCH] Support the HDF5 2 CMake parallel feature variable
+
+HDF5 2 no longer defines HDF5_IS_PARALLEL in its package config. It
+provides the equivalent HDF5_PROVIDES_PARALLEL variable instead. Load the
+external package config early and map the new variable to the name VTK's
+third-party machinery expects.
+---
+ ThirdParty/hdf5/CMakeLists.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/ThirdParty/hdf5/CMakeLists.txt b/ThirdParty/hdf5/CMakeLists.txt
+index 3fb791f65c..950f49f3b6 100644
+--- a/ThirdParty/hdf5/CMakeLists.txt
++++ b/ThirdParty/hdf5/CMakeLists.txt
+@@ -1,5 +1,16 @@
+ set(HDF5_EXTERNALLY_CONFIGURED 1)
+ 
++# HDF5 2 renamed the package-config variable that reports whether parallel
++# support is enabled.  vtk_module_third_party expects HDF5_IS_PARALLEL to be
++# defined after finding an external HDF5 package, so provide the compatibility
++# mapping before it validates the variables listed in USE_VARIABLES.
++if (VTK_MODULE_USE_EXTERNAL_vtkhdf5)
++  find_package(HDF5 QUIET CONFIG COMPONENTS C HL)
++  if (NOT DEFINED HDF5_IS_PARALLEL AND DEFINED HDF5_PROVIDES_PARALLEL)
++    set(HDF5_IS_PARALLEL "${HDF5_PROVIDES_PARALLEL}")
++  endif ()
++endif ()
++
+ vtk_module_third_party(
+   INTERNAL
+     LICENSE_FILES
+-- 
+2.51.0
