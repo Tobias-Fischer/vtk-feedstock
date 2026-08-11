@@ -76,7 +76,8 @@ if errorlevel 1 exit 1
 
 REM Move vtkIOFFMPEG files to a staging directory for the vtk-io-ffmpeg subpackage
 for %%d in ("%PREFIX%\..\..") do set "FFMPEG_BASE=%%~fd"
-set "FFMPEG_DIR=%FFMPEG_BASE%\vtk_ffmpeg_dir_%PKG_VERSION%_%PY_VER%"
+set "HDF5_VARIANT=%~1"
+set "FFMPEG_DIR=%FFMPEG_BASE%\vtk_ffmpeg_dir_%PKG_VERSION%_%PY_VER%_%HDF5_VARIANT%"
 echo FFMPEG_BASE=%FFMPEG_BASE%
 echo FFMPEG_DIR=%FFMPEG_DIR%
 mkdir "%FFMPEG_DIR%"

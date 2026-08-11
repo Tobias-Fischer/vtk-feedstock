@@ -23,6 +23,8 @@ source:
     - patches/ioss_fix_fmt12.patch
     - patches/expat_implib.patch
     - patches/jsoncpp.patch
+    # HDF5 2 exports HDF5_PROVIDES_PARALLEL instead of HDF5_IS_PARALLEL.
+    - patches/hdf5-2-parallel-detection.patch
 
 build:
   number: ${{ build }}
@@ -33,8 +35,8 @@ outputs:
     build:
       script:
         - if: not win
-          then: ${RECIPE_DIR}/build-base.sh
-          else: "%RECIPE_DIR%\\bld-base.bat"
+          then: ${RECIPE_DIR}/build-base.sh ${{ hdf5 }}
+          else: '"%RECIPE_DIR%\\bld-base.bat" ${{ hdf5 }}'
       post_process:
         - if: unix
           then:
@@ -237,8 +239,8 @@ outputs:
     build:
       script:
         - if: not win
-          then: ${RECIPE_DIR}/build-io-ffmpeg.sh
-          else: "%RECIPE_DIR%\\bld-io-ffmpeg.bat"
+          then: ${RECIPE_DIR}/build-io-ffmpeg.sh ${{ hdf5 }}
+          else: '"%RECIPE_DIR%\\bld-io-ffmpeg.bat" ${{ hdf5 }}'
     requirements:
       build: []
       host:

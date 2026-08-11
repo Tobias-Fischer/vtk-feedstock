@@ -2,7 +2,8 @@ setlocal EnableDelayedExpansion
 
 REM Move vtkIOFFMPEG files to %PREFIX%
 for %%d in ("%PREFIX%\..\..") do set "FFMPEG_BASE=%%~fd"
-set "FFMPEG_DIR=%FFMPEG_BASE%\vtk_ffmpeg_dir_%PKG_VERSION%_%PY_VER%"
+set "HDF5_VARIANT=%~1"
+set "FFMPEG_DIR=%FFMPEG_BASE%\vtk_ffmpeg_dir_%PKG_VERSION%_%PY_VER%_%HDF5_VARIANT%"
 echo FFMPEG_BASE=%FFMPEG_BASE%
 echo FFMPEG_DIR=%FFMPEG_DIR%
 for /r "%FFMPEG_DIR%" %%f in (*vtkIOFFMPEG*) do (
