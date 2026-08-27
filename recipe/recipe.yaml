@@ -139,6 +139,7 @@ outputs:
         - utfcpp
         - nlohmann_json
         - cli11
+        - fast_float
         - numpy
         - wslink
         - matplotlib-base >=2.0.0
