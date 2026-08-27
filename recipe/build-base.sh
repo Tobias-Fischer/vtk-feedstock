@@ -47,6 +47,7 @@ echo "VTK_ARGS:" "${VTK_ARGS[@]}"
 # now we can start configuring
 cmake -LAH .. -G "Ninja" ${CMAKE_ARGS} \
     -Wno-dev \
+    -DCMAKE_CROSSCOMPILING_EMULATOR:STRING="${CMAKE_CROSSCOMPILING_EMULATOR}" \
     -DCMAKE_BUILD_TYPE=$BUILD_CONFIG \
     -DCMAKE_PREFIX_PATH:PATH="${PREFIX}" \
     -DCMAKE_FIND_FRAMEWORK=LAST \
