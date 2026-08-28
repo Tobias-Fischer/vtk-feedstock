@@ -37,7 +37,9 @@ if [[ "$target_platform" == osx-* ]]; then
     export CXXFLAGS="${CXXFLAGS} -Wno-incompatible-pointer-types"
 fi
 
-CMAKE_ARGS="${CMAKE_ARGS} -DVTK_BUILD_PYI_FILES:BOOL=ON"
+if [[ "${target_platform}" == "${build_platform}" ]]; then
+    CMAKE_ARGS="${CMAKE_ARGS} -DVTK_BUILD_PYI_FILES:BOOL=ON"
+fi
 
 mkdir build
 cd build || exit
