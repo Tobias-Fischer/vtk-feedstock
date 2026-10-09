@@ -59,7 +59,8 @@ outputs:
           then:
             - python
             - cross-python_${{ target_platform }}
-            - qt6-main
+            # TODO: drop the cap once pyside6 6.12 is on conda-forge (needed by the tests)
+            - qt6-main <6.12
       host:
         - python
         - zlib
@@ -138,7 +139,8 @@ outputs:
             - gl2ps
         - if: not ppc64le
           then:
-            - qt6-main
+            # TODO: drop the cap once pyside6 6.12 is on conda-forge (needed by the tests)
+            - qt6-main <6.12
       run:
         - python
         - utfcpp
